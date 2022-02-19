@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private Block _segmentTemplate;
+    [SerializeField] private Segment _segmentTemplate;
     [SerializeField] private Block _blockTemplate;
-    [SerializeField] private Block _finishTemplate;
+    [SerializeField] private Finish _finishTemplate;
 
     [SerializeField] private int _towerSize;
 
