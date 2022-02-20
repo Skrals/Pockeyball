@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Segment : Block
+public class Segment : MonoBehaviour
 {
    
 }
