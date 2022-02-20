@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour
     [SerializeField] private float _jumpForce;
     [SerializeField] private Stick _stick;
     [SerializeField] private Vector3 _StickSpawnOffset;
+    [SerializeField] private bool _controllerCD;
 
     private Rigidbody _rigidbody;
     private Stick _tmpStick;
@@ -16,6 +17,7 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
+        _controllerCD = false;
         _rigidbody = GetComponent<Rigidbody>();
         _currentPosition = transform.position;
     }
@@ -23,8 +25,9 @@ public class Ball : MonoBehaviour
     private void Update()
     {
         Ray ray = new Ray(transform.position, Vector3.forward);
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) &&  !_controllerCD)
         {
+            StartCoroutine(CD());
             _currentPosition = transform.position;
             if (Physics.Raycast(ray, out RaycastHit hitInfo))
             {
@@ -74,5 +77,13 @@ public class Ball : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         Destroy(_tmpStick.gameObject);
         StopCoroutine(DeleteStick());
+    }
+
+    private IEnumerator CD ()
+    {
+        _controllerCD = true;
+        yield return new WaitForSeconds(1);
+        _controllerCD = false;
+        StopCoroutine(CD());
     }
 }
