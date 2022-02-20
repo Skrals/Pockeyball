@@ -41,10 +41,12 @@ public class Ball : MonoBehaviour
                 else if (hitInfo.collider.TryGetComponent(out Block block))
                 {
                     _rigidbody.isKinematic = false;
-                }
-                else if (hitInfo.collider.TryGetComponent(out Finish finish))
-                {
+                    _tmpStick = Instantiate(_stick, transform.position - _StickSpawnOffset, Quaternion.Euler(-90, -90, 90));
 
+                    _currHit = hitInfo;
+
+                    block.PlayMissEffect(block.gameObject);
+                    StartCoroutine(DeleteStick());
                 }
             }
         }
@@ -65,6 +67,12 @@ public class Ball : MonoBehaviour
                 _rigidbody.isKinematic = false;
             }
         }
+    }
 
+    private IEnumerator DeleteStick ()
+    {
+        yield return new WaitForSeconds(0.3f);
+        Destroy(_tmpStick.gameObject);
+        StopCoroutine(DeleteStick());
     }
 }

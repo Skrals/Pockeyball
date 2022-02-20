@@ -16,6 +16,7 @@ public class Stick : MonoBehaviour
         {
             _power += Time.deltaTime;
         }
+
         _power = Mathf.Clamp(_power, 0, 1);
         _animator.SetFloat("Blend", _power);
     }
